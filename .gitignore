@@ -32,11 +32,7 @@ lerna-debug.log*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
-<<<<<<< HEAD
 !.vscode/extensions.json
 # Local Netlify folder
 .netlify
 .env
-=======
-!.vscode/extensions.json
->>>>>>> parent of 8fa5f39 (dep)
