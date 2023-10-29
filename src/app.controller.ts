@@ -14,10 +14,18 @@ export class AppController {
     return this.appService.sendMessage(lesson, input);
   }
 
-  @Get('generate-text')
-  async generateText(@Body('input') input: string): Promise<string> {
-    return this.googleAIService.generateText(input);
-  }
+ 
 }
 
+@Controller('ai-gen')
+export class AiController {
+  constructor(private readonly appService: AppService, private readonly googleAIService: GoogleAIService) {}
+
+  @Post('define-tense')
+async generateText(@Body('input') input: string): Promise<string> {
+  return this.googleAIService.generateText(input);
+}
+
+ 
+}
 
