@@ -22,9 +22,8 @@ export class AiController {
   constructor(private readonly appService: AppService, private readonly googleAIService: GoogleAIService) {}
 
   @Post('define-tense')
-async generateText(@Body('input') input: string): Promise<object> {
-  const data = { tense: this.googleAIService.generateText(input)};
-  return data;
+async generateText(@Body('input') input: string): Promise<string> {
+  return this.googleAIService.generateText(input);
 }
 
  
