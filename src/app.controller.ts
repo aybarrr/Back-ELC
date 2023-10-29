@@ -1,6 +1,7 @@
 import { Controller, Get, Body, Param, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import { GoogleAIService } from './googleAi.service';
+import { stringify } from 'querystring';
 
 @Controller('lessons')
 export class AppController {
@@ -22,10 +23,12 @@ export class AiController {
   constructor(private readonly appService: AppService, private readonly googleAIService: GoogleAIService) {}
 
   @Post('define-tense')
-async generateText(@Body('input') input: string): Promise<string> {
-  return this.googleAIService.generateText(input);
+
+async generateText(@Body('input') input: Object): Promise<string> {
+  console.log(`input to controller: ${typeof(input)}`);
+
+  return this.googleAIService.generateText(JSON.stringify(input));
 }
 
- 
 }
 

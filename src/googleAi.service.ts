@@ -65,9 +65,13 @@ export class GoogleAIService {
       },
     });
 
+    console.log(`input to service: ${input}`);
+
     if (Array.isArray(result) && result[0] && result[0].candidates && result[0].candidates[0]) {
         const generatedOutput = result[0].candidates[0].output.trim();
         console.log(generatedOutput);
+        console.log(`Output from service: ${generatedOutput}`);
+
         return generatedOutput;
       } else {
         console.log("Unable to extract generated output");
