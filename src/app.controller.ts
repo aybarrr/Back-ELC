@@ -14,8 +14,6 @@ export class AppController {
   ) {
     return this.appService.sendMessage(lesson, input);
   }
-
- 
 }
 
 @Controller('ai-gen')
@@ -29,6 +27,5 @@ async generateText(@Body('input') input: Object): Promise<string> {
 
   return this.googleAIService.generateText(JSON.stringify(input));
 }
-
-}
+} 
 
