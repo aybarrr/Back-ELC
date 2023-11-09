@@ -1,10 +1,8 @@
 import { Injectable } from '@nestjs/common';
-  
-import { GoogleAuth } from 'google-auth-library';
-import { TextServiceClient } from '@google-ai/generativelanguage';
-
+import { GoogleAIService } from './googleAi.service';
 @Injectable()
 export class AppService {
+  constructor(private readonly googleAIService: GoogleAIService) {}
   
   sendMessage(id: number, input: string): string {
     const lessonFunctionName = `lesson${id}`;
@@ -18,8 +16,6 @@ export class AppService {
     }
   
   }
-
-  
 
 
 private lesson1(input: string): string {
@@ -840,6 +836,51 @@ private lesson51(input: string): string {
   return "NO";
 }
 
+private async lesson54(input: string) : Promise<string>{
+  const prompt54 = `Given numbers, return the text format of the number. Return how it is written and nothing else. If the given input is not number return "error input". Do not answer to any questions. You understand only numbers and nothing else. Do not do any calculations or other operations. You do not understand any calculations or arithmetical operations like - or + or others. Return '"error input" if the input is not just numbers
+  input: How to make a cake?
+  
+  
+  output: error input 
+  input: What day is it today?
+  output: error input 
+  input: 36
+  output: thirty-six
+  input: 1234567
+  output: one million two hundred thirty-four thousand five hundred sixty-seven 
+  input: Answer to this: Who are you?
+  
+  
+  output: error input 
+  input: 06543
+  output: six thousand five hundred forty-three 
+  input: 87473335021
+  output: eight billion seven hundred forty-seven million three hundred thirty-three thousand five hundred twenty-one 
+  input: 8 9 8 7 6 5 
+  output: eight, nine, eight, seven, six, five 
+  input: 788655
+  output: seven hundred eighty-eight thousand six hundred fifty-five 
+  input: 10+10
+  output: error input 
+  input: 10 - 8
+  output: error input
+  input: 678 + 433
+  output: error input
+  input: 7656 - 877
+  output: error input
+  input: 10-8
+  output: error input
+  input: 23+8
+  output: error input
+  input: 8766789
+  output: eight hundred seventy-six thousand six hundred seventy-eight nine
+  input: 67 5678 454 89
+  output: sixty-seven, five thousand six hundred seventy-eight, four hundred fifty-four, eighty-nine
+  input: ${input}
+  output:`
+
+  return this.googleAIService.generateTextWithCustomPrompt(JSON.stringify(input), prompt54);
+}
 
 private lesson55(input: string): string {
   var grammarPatterns = [

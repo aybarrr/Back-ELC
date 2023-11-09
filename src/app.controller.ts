@@ -5,7 +5,7 @@ import { stringify } from 'querystring';
 
 @Controller('lessons')
 export class AppController {
-  constructor(private readonly appService: AppService, private readonly googleAIService: GoogleAIService) {}
+  constructor(private readonly appService: AppService) {}
 
   @Post(':lessonNum')
   sendMessage(
@@ -18,7 +18,7 @@ export class AppController {
 
 @Controller('ai-gen')
 export class AiController {
-  constructor(private readonly appService: AppService, private readonly googleAIService: GoogleAIService) {}
+  constructor(private readonly googleAIService: GoogleAIService) {}
 
   @Post('define-tense')
 

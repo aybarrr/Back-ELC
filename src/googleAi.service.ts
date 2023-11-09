@@ -162,4 +162,44 @@ input: ${input}
       }
    
   }
+
+  async generateTextWithCustomPrompt(input: string, prompt: string): Promise<string> {
+    const stopSequences: string[] = [];
+    const promptString = prompt; 
+
+    const result = await this.client.generateText({
+      model: this.MODEL_NAME,
+      temperature: 0.7,
+      candidateCount: 1,
+      topK: 40,
+        topP: 0.95,
+        maxOutputTokens: 1024,
+        stopSequences: stopSequences,
+        safetySettings: [
+        { category: 'HARM_CATEGORY_DEROGATORY', threshold: 1 },
+        { category: 'HARM_CATEGORY_TOXICITY', threshold: 1 },
+        { category: 'HARM_CATEGORY_VIOLENCE', threshold: 2 },
+        { category: 'HARM_CATEGORY_SEXUAL', threshold: 2 },
+        { category: 'HARM_CATEGORY_MEDICAL', threshold: 2 },
+        { category: 'HARM_CATEGORY_DANGEROUS', threshold: 2 },
+      ],
+      prompt: {
+        text: promptString,
+      },
+    });
+
+    console.log(`input to service: ${input}`);
+
+    if (Array.isArray(result) && result[0] && result[0].candidates && result[0].candidates[0]) {
+        const generatedOutput = result[0].candidates[0].output.trim();
+        console.log(generatedOutput);
+        console.log(`Output from service: ${generatedOutput}`);
+
+        return generatedOutput;
+      } else {
+        console.log("Unable to extract generated output");
+      }
+   
+  }
+  
 }
