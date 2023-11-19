@@ -1,10 +1,12 @@
 // google-ai.service.ts
-import { Injectable } from '@nestjs/common';
+import { Injectable, Scope } from '@nestjs/common';
 import { GoogleAuth } from 'google-auth-library';
 import { TextServiceClient } from '@google-ai/generativelanguage';
 require('dotenv').config();
 
-@Injectable()
+@Injectable({
+  scope: Scope.REQUEST,
+})
 export class GoogleAIService {
     
   private client: TextServiceClient;
@@ -188,13 +190,17 @@ input: ${input}
       },
     });
 
-    console.log(`input to service: ${input}`);
+  
+    
 
     if (Array.isArray(result) && result[0] && result[0].candidates && result[0].candidates[0]) {
         const generatedOutput = result[0].candidates[0].output.trim();
-        console.log(generatedOutput);
-        console.log(`Output from service: ${generatedOutput}`);
+        console.log(`input : ${input}` );
+        console.log(`output : ${generatedOutput}` );
+      
 
+
+        console.log(generatedOutput);
         return generatedOutput;
       } else {
         console.log("Unable to extract generated output");

@@ -1,20 +1,23 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject, } from '@nestjs/common';
 import { GoogleAIService } from './googleAi.service';
 @Injectable()
 export class AppService {
   constructor(private readonly googleAIService: GoogleAIService) {}
   
-  sendMessage(id: number, input: string) {
+  
+  sendMessage(id: number, input: string): string {  
+    
+    
     const lessonFunctionName = `lesson${id}`;
     const lessonFunction = this[lessonFunctionName];
 
     if (typeof lessonFunction === 'function') {
+      
       return lessonFunction(input);
     } else {
       console.error(`Function '${lessonFunctionName}' not found`);
-      return 'Function not found';
+      return 'Function not found';  
     }
-  
   }
 
 
@@ -878,10 +881,9 @@ private async lesson54(input: string) : Promise<string>{
   output: sixty-seven, five thousand six hundred seventy-eight, four hundred fifty-four, eighty-nine
   input: ${input}
   output:`
-  console.log(this);
+
+  console.log(`google ai service: ${this.googleAIService.generateTextWithCustomPrompt}`);
   const res = await this.googleAIService.generateTextWithCustomPrompt(JSON.stringify(input), prompt54);
- 
-  
   return  res;
 }
 
@@ -1066,57 +1068,7 @@ private lesson67(input: string): string {
   return "NO";
 }
 
-private async lesson68(input: string) : Promise<string>{
-  const prompt68 = `Identify the correct grammatical structure of the following sentence:
 
-  How many [nouns] do [subject] [verb]?'
-  [subject] [verb] [nouns]'
-  
-  Yes if it is correct.
-  No if it is not.
-  Examples:
-  
-  Wh-question:
-  
-  How many people are there?
-  
-  Declarative sentence:
-  
-  People are there.
-  
-  Incorrect:
-  
-  How many people ther are?
-  
-  Incorrect:
-  
-  There are people.
-  
-  Answer:
-  
-  YES
-  
-  The first sentence structure, 'How many [nouns] do [subject] [verb]?', is a wh-question. Wh-questions are used to ask about specific information, such as the quantity, identity, or location of something. They begin with a wh-word, such as "how many," "who," "what," "where," or "when."
-  
-  The second sentence structure, '[subject] [verb] [nouns]', is a declarative sentence. Declarative sentences are used to make statements about something.
-  
-  To check that the input is in the correct format, follow these steps:
-  
-  Split the input string into words.
-  Check if the input string is a wh-question.
-  If the first word of the input string is a wh-word, such as "how many," "who," "what," "where," or "when," and the second word is "many"  and the third word is "do" and the fourth word is a verb, then the input string is in the correct format for a wh-question.
-  Check if the input string is a declarative sentence.
-  If the first word of the input string is a subject, and the second word is a verb, and the third word is a noun, then the input string is in the correct format for a declarative sentence.
-  If the input string is not in the correct format for a wh-question or a declarative sentence, then return "NO."
-  input: They need two chairs
-  output: YES
-  input: My friends want ice cream
-  output: YES
-  input: ${input}
-  output:`
-  return this.googleAIService.generateTextWithCustomPrompt(JSON.stringify(input), prompt68);
-
-}
 
 private lesson69(input: string): string {
   var grammarPatterns = [

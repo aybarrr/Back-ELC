@@ -2,6 +2,7 @@ import { Controller, Get, Body, Param, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import { GoogleAIService } from './googleAi.service';
 import { stringify } from 'querystring';
+import { AiLessonsService } from './AiLessons.service';
 
 
 @Controller('lessons')
@@ -17,7 +18,7 @@ export class AppController {
   }
 }
 
-@Controller('ai-gen')
+@Controller('ai-tense')
 export class AiController {
   constructor(private readonly googleAIService: GoogleAIService) {}
 
@@ -30,3 +31,25 @@ async generateText(@Body('input') input: Object): Promise<string> {
 }
 } 
 
+@Controller('ai-lessons')
+export class AiLessonsController {
+  constructor(private readonly googleAIService: GoogleAIService, private aiLessonsService: AiLessonsService) {}
+
+  @Post(':lessonNum')
+  async sendMessage(
+    @Param('lessonNum') lesson: number,
+    @Body('input') input: string
+  ) {
+     
+    const prompt = this.aiLessonsService.createFunction(lesson, input);
+    return await this.googleAIService.generateTextWithCustomPrompt(input, prompt);
+    }
+
+    
+
+    
+
+}
+
+
+  
