@@ -43,12 +43,7 @@ export class AiLessonsController {
      
     const prompt = this.aiLessonsService.createFunction(lesson, input);
     return await this.googleAIService.generateTextWithCustomPrompt(input, prompt);
-    }
-
-    
-
-    
-
+  }
 }
 
 

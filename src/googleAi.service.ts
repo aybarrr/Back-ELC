@@ -22,112 +22,151 @@ export class GoogleAIService {
 
   async generateText(input: string): Promise<string> {
     const stopSequences: string[] = [];
-    const promptString = `Given a sentence, identify the tense of the sentence and return the tense in the format "Tense is "+ tense of the sentence.
-
-    Sentences with multiple verbs: If a sentence has multiple verbs, the model should identify the tense of the sentence based on the main verb.
-    Sentences with modal verbs: Modal verbs (e.g., can, could, may, might, must, shall, should, will, would) can change the tense of a sentence. The model should be able to identify the tense of modal verbs and the verbs they modify, and then identify the tense of the sentence based on the main verb.
-    Sentences with irregular verbs: Irregular verbs can have different forms for different tenses. The model should be able to identify the tense of irregular verbs, even if they are not in the standard form.
-    Sentences with contextual clues: The tense of a sentence can sometimes be determined by contextual clues. For example, the sentence "I have been to the store" could be in the present perfect tense, the past perfect tense, or the future perfect tense, depending on the context. The model should be able to use contextual clues to determine the tense of the sentence, and then identify the tense of the sentence based on the main verb.
-    
+    const promptString = `You are a helpful English assistant checking the tense of the prompt. You have to define the time tenses of the sentence and return it. Your answers are concise. Your answers have to be in the following format: "Tense is:" + tense of the prompt sentence. You don't fix the grammatical or any other mistakes. If you don't understand the prompt or if it contains grammatical errors don't fix it, return "error". Do not return anything other than just "Tense is:" + tense of the prompt sentence. The given sentence might be a question. Define the tense of it.  Return nothing but "Tense is:" + tense of the prompt sentence. Do not return confirmation phrases. Return the answer only in the given format.  Make sure the tense of the sentence is correct. If you are not sure for 90% then return "error". If the sentence uses a combination of tenses then return  "Tense is a combination of tenses:" + all tenses used in sentence.
     input: She has designed iconic landmarks that have become symbols of cities around the world
-output:  Tense is Present Perfect.
-input: I have mentored a generation of young entrepreneurs, helping them achieve their goals.
-output:  Tense is Present Perfect.
-input: The team has developed cutting-edge medical devices that have saved countless lives.
-output:  Tense is Present Perfect.
-input: I have built a network of schools that provide quality education to underprivileged children
-output:  Tense is Present Perfect.
-input: He has coached championship-winning teams in multiple sports.
-output:  Tense is Present Perfect.
-input: The team has created groundbreaking video games that revolutionized the industry.
-output:  Tense is Present Perfect.
-input: He has been creating educational content and resources for wildlife protection and conservation.
-output:  Tense is Present Perfect Continuous.
-input: She has been mentoring students in sustainable agriculture practices for food security and sustainability.
-output:  Tense is Present Perfect Continuous.
-input: I have been mentoring students in renewable energy engineering.
-output:  Tense is Present Perfect Continuous.
-input: She has been advocating for green urban development projects
-output:  Tense is Present Perfect Continuous.
-input: She has built a network of schools that provides quality education to underprivileged children
-output: Tense is Present Perfect.
-input: I has been  building a network of schools that provides quality education to underprivileged children.
-output: error
-input: The team has developed cutting-edge medical devices that have saved countless lives
-output: Tense is Present Perfect.
-input: She has built a network of schools that provides quality education to underprivileged children.
-output: Tense is Present Perfect.
-input: He had developed cutting-edge medical devices that had saved countless lives.
-output: Tense is Past Perfect.
-input: He has been designing iconic landmarks that have become symbols of cities around the world.
-output: Tense is Present Perfect Continuous.
-input: I built a network of schools that provide quality education to underprivileged children.
-output: Tense is Past.
-input: I was mentoring a generation of young entrepreneurs, helping them achieve their goals.
-output: Tense is Past Continuous
-input: I have been advocating for green urban development projects
-output: Tense is Present Perfect Continuous.
-input: He built a network of schools that provide quality education to underprivileged children
-output: Tense is Past.
-input: She has been advocating for green urban development projects
-output: Tense is Present Perfect Continuous.
-input: He designed iconic landmarks that have become symbols of cities around the world.
-output: Tense is Past 
-input: He has coached championship-winning teams in multiple sports.
-output: Tense is Present Perfect.
-input: He has been coaching championship-winning teams in multiple sports.
-output: Tense is Present Perfect Continuous.
-input: He will build a network of schools that provides quality education to underprivileged children
-output: Tense is Future.
-input: Do you like ice cream?
-output: Tense is Present
-input: Are you studying for your exams right now?
-output: Tense is Present Continuous
-input: He will build a network of schools that provides quality education to underprivileged children
-output: Tense is Future.
-input: Have you ever visited Paris?
-output: Tense is Present Perfect
-input: I did mentor a generation of young entrepreneurs
-output: Tense is Past
-input: Did you watch that movie last night?
-output: Tense is Past
-input: Were you sleeping when I called you?
-output: Tense is Past Continuous
-input: Had you ever been to Japan before that trip?
-output: Tense is Past Perfect
-input: Will you eat dinner later today?
-output: Tense is Future
-input: Will you go to the party with me tomorrow?
-output: Tense is Future
-input: Will you be working late tonight?
-output: Tense is Future Continuous
-input: Will you have completed the assignment by Friday?
-output: Tense is Future Perfect
-input: Did you finish your homework yet?
-output: Tense is Present Perfect
-input: He has been creating educational content and resources for wildlife protection and conservation
-output: Tense is Present Perfect Continuous
-input: How often do you exercise during the week?
-output: Tense is Present Simple
-input: Do you enjoy reading books in your free time?
-output: Tense is Present Simple
-input: Are you a vegetarian or do you eat meat?
-output: Tense is Present Simple
-input: What are you currently working on at your job?
-output: Tense is Present Continuous
-input: Who are you meeting for lunch today?
-output: Tense is Present Continuous
-input: Why is the dog barking so loudly right now?
-output: Tense is Present Continuous
-input: Have you ever traveled to a foreign country?
-output: Tense is Present Perfect
-input: What's the most exciting thing you've done in the past year?
-output: Tense is Present Perfect
-input: Have you tried that new restaurant in town?
-output: Tense is Present Perfect
-input: Had you ever met him before the conference?
-output: Tense is Past Perfect
-input: ${input}
+    output:  Tense is Present Perfect.
+    input: I have mentored a generation of young entrepreneurs, helping them achieve their goals.
+    output:  Tense is Present Perfect.
+    input: The team has developed cutting-edge medical devices that have saved countless lives.
+    output:  Tense is Present Perfect.
+    input: I have built a network of schools that provide quality education to underprivileged children
+    output:  Tense is Present Perfect.
+    input: He has coached championship-winning teams in multiple sports.
+    output:  Tense is Present Perfect.
+    input: The team has created groundbreaking video games that revolutionized the industry.
+    output:  Tense is Present Perfect.
+    input: He has been creating educational content and resources for wildlife protection and conservation.
+    output:  Tense is Present Perfect Continuous.
+    input: She has been mentoring students in sustainable agriculture practices for food security and sustainability.
+    output:  Tense is Present Perfect Continuous.
+    input: I have been mentoring students in renewable energy engineering.
+    output:  Tense is Present Perfect Continuous.
+    input: She has been advocating for green urban development projects
+    output:  Tense is Present Perfect Continuous.
+    input: She has built a network of schools that provides quality education to underprivileged children
+    output: Tense is Present Perfect.
+    input: I has been  building a network of schools that provides quality education to underprivileged children.
+    output: error
+    input: The team has developed cutting-edge medical devices that have saved countless lives
+    output: Tense is Present Perfect.
+    input: She has built a network of schools that provides quality education to underprivileged children.
+    output: Tense is Present Perfect.
+    input: He had developed cutting-edge medical devices that had saved countless lives.
+    output: Tense is Past Perfect.
+    input: He has been designing iconic landmarks that have become symbols of cities around the world.
+    output: Tense is Present Perfect Continuous.
+    input: I built a network of schools that provide quality education to underprivileged children.
+    output: Tense is Past.
+    input: I was mentoring a generation of young entrepreneurs, helping them achieve their goals.
+    output: Tense is Past Continuous
+    input: I have been advocating for green urban development projects
+    output: Tense is Present Perfect Continuous.
+    input: He built a network of schools that provide quality education to underprivileged children
+    output: Tense is Past.
+    input: She has been advocating for green urban development projects
+    output: Tense is Present Perfect Continuous.
+    input: Do you work here?
+    output: Tense is Present.
+    input: Is it raining?
+    output: Tense is Present.
+    input: What are you eating?
+    output: Tense is Present.
+    input: The team has created groundbreaking video games that revolutionized the industry
+    output: Tense is Present Perfect
+    input: Did you go to the store yesterday?
+    output: Tense is Past.
+    input: what did you do yesterday?
+    output: Tense is Past.
+    input: Is he a doctor?
+    output: Tense is Present.
+    input: What will you do tomorrow?
+    output: Tense is Future
+    input: Have you done your homework?
+    output: Tense is Present Perfect
+    input: He designed iconic landmarks that have become symbols of cities around the world
+    output: Tense is a combination of tenses Past and  Present Perfect
+    input: He has been designing iconic landmarks that have become symbols of cities around the world
+    output: Tense is Present Perfect Continuous
+    input: He designed iconic landmarks that have become symbols of cities around the world.
+    output: Tense is Past
+    input: What will you do tomorrow?
+    output: Tense is Future
+    input: Every morning, she walks to the park and feeds the birds.
+    output: Tense is Present Simple
+    input: The sun rises in the east and sets in the west.
+    output: Tense is Present Simple 
+    input: He usually takes the bus to work.
+    output: Tense is Present Simple
+    input: As we speak, they are preparing for the upcoming exam.
+    output: Tense is Present Continuous
+    input: I am currently working on a project for my art class.
+    output: Tense is Present Continuous
+    input: The team is playing exceptionally well in today's match.
+    output: Tense is Present Continuous
+    input: Last summer, we traveled to Europe and explored many historic cities.
+    output: Tense is Past Simple
+    input: He completed his degree in computer science three years ago.
+    output: Tense is Past Simple
+    input: While I was studying, my roommate was playing music loudly in the background.
+    output: Tense is Past Continuous
+    
+    input: The sun was setting as we walked along the beach.
+    output: Tense is Past Continuous
+    input: Tomorrow, we will attend a conference on environmental sustainability.
+    output: Tense is Future Simple
+    input: She will graduate from university next spring.
+    output: Tense is Future Simple
+    input: This time next week, I will be attending a workshop in the city.
+    output: Tense is Future Continuous
+    input: At 8 PM tomorrow, they will be watching a live performance at the theater.
+    output: Tense is Future Continuous
+    input: By the end of the year, I will have completed all the required courses for my certification.
+    output: Tense is Future Perfect
+    input: They will have been married for 25 years in June.
+    output: Tense is Future Perfect
+    input: The new policies are being implemented by the management team as we speak. 
+    output: Tense is Present Continuous Passive
+    input: The project has been being worked on by the team for several months for now 
+    output: Tense is Present Perfect Continuous Passive
+    input: By this time next year, she will have been studying Chinese for five years
+    output: Tense is Future Perfect Continuous 
+    input: The documents had been being reviewed by the committe nefore the decision was made 
+    output: Tense is Past Perfect Continuous Passive 
+    input: Have you been studying Russian for long ?
+    output: Tense is Present Perfect Continuous Interrogative
+    input: Have you been studying for your exam?
+    output: Tense is Present Perfect Continuous Interrogative 
+    input: Have you been working on your project for a long time?
+    output: Tense is Present Perfect Continuous Interrogative 
+    input: Have the students been taking their test for a while?
+    output: Tense is Present Perfect Continuous Interrogative 
+    input: The house had been being built for 5 years before it was finally completed.
+    output: Tense is Past Perfect Continuous Passive
+    input: The painting had been being restored for years when it was finally unveiled to the public.
+    output: Tense is Past Perfect Continuous Passive 
+    input: The book had been being written for months when the author finally finished it.
+    output: Tense is Past Perfect Continuous Passive 
+    input: Have you been studying for your exam all day?
+    output: Tense is Present Perfect Continuous Interrogative 
+    input: Have you been eating breakfast for the past hour?
+    output: Tense is Present Perfect Continuous Interrogative 
+    input: Haven't you been waiting for the bus for over an hour?
+    output: Tense is Present Perfect Continuous Interrogative 
+    input: How long have you been studying for your exam?
+    output: Tense is Present Perfect Continuous Interrogative 
+    input: What have you been watching on TV for the past few hours?
+    output: Tense is Present Perfect Continuous Interrogative 
+    input: As we were chatting, i realized i had forgotten to reply to an important email 
+    output: Tense is Past Perfect Continuous 
+    input: After she had been studying for hours, she finally felt ready to take the exam
+    output: Tense is Past Perfect Continuous 
+    input: When the police arrived, the thieves had been robbing the bank for over an hour
+    output: Tense is Past Perfect Continuous 
+    input: By the time the guests arrived, the host had been preparing the party for several hours.
+    output: Tense is Past Perfect Continuous 
+    input: As the storm approached, the sailors had been working tirelessly to secure the ship for over a day.
+    output: Tense is Past Perfect Continuous 
+    input: ${input}
     output:`; 
 
     const result = await this.client.generateText({
